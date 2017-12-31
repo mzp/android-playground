@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item
+        android:id="@+id/home"
+        android:title="Home" />
+    <item
+        android:id="@+id/local_timeline"
+        android:title="Local" />
+    <item
+        android:id="@+id/federated_timeline"
+        android:title="Federated" />
+    <item android:title="Setting">
+        <menu>
+
+            <item
+                android:id="@+id/account"
+                android:title="Account" />
+            <item
+                android:id="@+id/notification"
+                android:title="Notification" />
+        </menu>
+    </item>
+</menu>
