@@ -23,6 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/holo_blue_dark"
+                app:layout_scrollFlags="scroll|enterAlways"
                 app:title="mstdn.jp"
                 app:titleTextColor="@android:color/white" />
         </android.support.design.widget.AppBarLayout>
@@ -45,53 +46,90 @@
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:gravity="center_vertical"
-                        android:textSize="90dp"
-                        android:text="🎍" />
+                        android:text="🎍"
+                        android:textSize="90dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:gravity="center_vertical"
-                        android:textSize="90dp"
-                        android:text="⛄️" />
+                        android:text="⛄️"
+                        android:textSize="90dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:gravity="center_vertical"
-                        android:textSize="90dp"
-                        android:text="🌧" />
+                        android:text="🌧"
+                        android:textSize="90dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:gravity="center_vertical"
-                        android:textSize="90dp"
-                        android:text="🍣" />
+                        android:text="🍣"
+                        android:textSize="90dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:gravity="center_vertical"
-                        android:textSize="90dp"
-                        android:text="🐕" />
+                        android:text="🐕"
+                        android:textSize="90dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:gravity="center_vertical"
-                        android:text="Hello World!" />
+                        android:text="🐕"
+                        android:textSize="90dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:gravity="center_vertical"
-                        android:text="Hello World!" />
+                        android:text="🐕"
+                        android:textSize="90dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center_vertical"
+                        android:text="🐕"
+                        android:textSize="90dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center_vertical"
+                        android:text="🐕"
+                        android:textSize="90dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center_vertical"
+                        android:text="🐕"
+                        android:textSize="90dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center_vertical"
+                        android:text="🐕"
+                        android:textSize="90dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:gravity="center_vertical"
+                        android:text="🐕"
+                        android:textSize="90dp" />
                 </LinearLayout>
             </ScrollView>
         </android.support.v4.widget.NestedScrollView>
-        <android.support.design.widget.BottomNavigationView
-            xmlns:android="http://schemas.android.com/apk/res/android"
+
+        <android.support.design.widget.BottomNavigationView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
@@ -99,6 +137,7 @@
             android:layout_gravity="bottom"
             android:background="@color/colorPrimaryDark"
             app:elevation="8dp"
+            app:layout_behavior="jp.mzp.mastodon.behavior.BottomNavigationBehavior"
             app:menu="@menu/bottom" />
 
     </android.support.design.widget.CoordinatorLayout>
