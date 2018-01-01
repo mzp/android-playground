@@ -37,95 +37,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
+                <FrameLayout
+                    android:id="@+id/frame"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:text="🎍"
-                        android:textSize="90dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:text="⛄️"
-                        android:textSize="90dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:text="🌧"
-                        android:textSize="90dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:text="🍣"
-                        android:textSize="90dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:text="🐕"
-                        android:textSize="90dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:text="🐕"
-                        android:textSize="90dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:text="🐕"
-                        android:textSize="90dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:text="🐕"
-                        android:textSize="90dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:text="🐕"
-                        android:textSize="90dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:text="🐕"
-                        android:textSize="90dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:text="🐕"
-                        android:textSize="90dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="center_vertical"
-                        android:text="🐕"
-                        android:textSize="90dp" />
-                </LinearLayout>
             </ScrollView>
         </android.support.v4.widget.NestedScrollView>
 
