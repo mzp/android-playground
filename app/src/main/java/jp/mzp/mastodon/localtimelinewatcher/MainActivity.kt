@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment
 import android.app.FragmentTransaction
 import android.content.Intent
 import android.os.PersistableBundle
+import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.jvm.javaClass
 
@@ -19,20 +20,30 @@ class MainActivity : AppCompatActivity() {
         ActionBarDrawerToggle(this, drawer_layout, toolbar, R.string.drawer_open, R.string.drawer_close)
     }
 
+    private val accessTokenStore: AccessTokenStore? by lazy {
+        AccessTokenStore(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         drawer_layout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
 
-        // ADD: Login check
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
+        val hostName = accessTokenStore?.hostName
+        val accessToken = accessTokenStore?.accessToken
+        println(hostName)
+        println(accessToken)
+        if (hostName == null || accessToken == null) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            return
+        }
 
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
-                    loadFragment(HomeFragment.newInstance())
+                    loadFragment(HomeFragment.newInstance(hostName, accessToken))
                     true
                 }
                 R.id.notification -> {
@@ -48,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        loadFragment(HomeFragment.newInstance())
+        loadFragment(HomeFragment.newInstance(hostName, accessToken))
     }
 
     private fun loadFragment(fragment: Fragment) {

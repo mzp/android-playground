@@ -53,10 +53,11 @@ class LoginActivity : AppCompatActivity() {
                                 authCode,
                                 "authorization_code"
                         )?.execute()?.let { accessToken ->
-                            AccessTokenStore(this).write(accessToken)
+                            AccessTokenStore(this).write(host_name.text.toString(), accessToken)
 
                             runOnUiThread {
-                                this.finish()
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
                             }
                         }
                     } catch (e: Exception) {

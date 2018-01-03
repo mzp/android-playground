@@ -8,19 +8,25 @@ class AccessTokenStore(context: Context) {
     private val data = context.getSharedPreferences("credential", Context.MODE_PRIVATE)
     private val gson = Gson()
 
-    fun read(): AccessToken? {
-        val json = data.getString("access-token", "")
-
-        if (json == "") {
-            return null
-        } else {
-            return gson.fromJson<AccessToken>(json, AccessToken::class.java)
+    val accessToken: AccessToken?
+        get() {
+            val json = data.getString("access-token", "")
+            if (json == "") {
+                return null
+            } else {
+                return gson.fromJson<AccessToken>(json, AccessToken::class.java)
+            }
         }
-    }
 
-    fun write(accessToken: AccessToken) {
+    val hostName: String?
+        get() {
+            return data.getString("host-name", null)
+        }
+
+    fun write(hostName: String, accessToken: AccessToken) {
         val json = gson.toJson(accessToken)
         val edit = data.edit()
+        edit.putString("host-name", hostName)
         edit.putString("access-token", json)
         edit.apply()
     }
