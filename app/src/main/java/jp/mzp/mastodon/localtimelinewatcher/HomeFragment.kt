@@ -9,8 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.gson.Gson
+import com.squareup.picasso.Picasso
 import com.sys1yagi.mastodon4j.MastodonClient
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken
@@ -21,11 +23,12 @@ import okhttp3.OkHttpClient
 import kotlin.concurrent.thread
 
 class TootViewHolder(view : View): RecyclerView.ViewHolder(view) {
+    val avator = view.findViewById<ImageView>(R.id.avator)
     val account = view.findViewById<TextView>(R.id.account)
     val content = view.findViewById<TextView>(R.id.content)
 }
 
-class TootsAdapter(private val toots: List<Status>, context: Context): RecyclerView.Adapter<TootViewHolder>() {
+class TootsAdapter(private val toots: List<Status>, private val context: Context): RecyclerView.Adapter<TootViewHolder>() {
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TootViewHolder {
@@ -34,8 +37,15 @@ class TootsAdapter(private val toots: List<Status>, context: Context): RecyclerV
     }
 
     override fun onBindViewHolder(holder: TootViewHolder?, position: Int) {
-        holder?.account?.text = toots[position].account?.displayName
-        holder?.content?.text = toots[position].content
+        val toot = toots[position]
+
+        holder?.content?.text = toot.content
+
+        val account = toot.account
+        if (account != null) {
+            holder?.account?.text = account.displayName
+            Picasso.with(context).load(account.avatar).into(holder?.avator)
+        }
     }
 
     override fun getItemCount(): Int {
