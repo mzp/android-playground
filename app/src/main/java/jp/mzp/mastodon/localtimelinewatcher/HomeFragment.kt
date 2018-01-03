@@ -1,10 +1,12 @@
 package jp.mzp.mastodon.localtimelinewatcher
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +23,9 @@ import jp.mzp.mastodon.localtimelinewatcher.R.layout.fragment_home
 import kotlinx.android.synthetic.main.fragment_home.*
 import okhttp3.OkHttpClient
 import kotlin.concurrent.thread
+import android.text.Spanned
+
+
 
 class TootViewHolder(view : View): RecyclerView.ViewHolder(view) {
     val avator = view.findViewById<ImageView>(R.id.avator)
@@ -39,8 +44,7 @@ class TootsAdapter(private val toots: List<Status>, private val context: Context
     override fun onBindViewHolder(holder: TootViewHolder?, position: Int) {
         val toot = toots[position]
 
-        holder?.content?.text = toot.content
-
+        holder?.content?.setText(fromHtml(toot.content), TextView.BufferType.SPANNABLE)
         val account = toot.account
         if (account != null) {
             holder?.account?.text = account.displayName
@@ -50,6 +54,16 @@ class TootsAdapter(private val toots: List<Status>, private val context: Context
 
     override fun getItemCount(): Int {
         return toots.size
+    }
+
+    fun fromHtml(html: String): Spanned {
+        val result: Spanned
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            result = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
+        } else {
+            result = Html.fromHtml(html)
+        }
+        return result
     }
 }
 
