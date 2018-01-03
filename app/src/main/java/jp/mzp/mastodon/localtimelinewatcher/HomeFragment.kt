@@ -1,18 +1,48 @@
 package jp.mzp.mastodon.localtimelinewatcher
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.TextView
 import com.google.gson.Gson
 import com.sys1yagi.mastodon4j.MastodonClient
+import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken
 import com.sys1yagi.mastodon4j.api.method.Timelines
 import jp.mzp.mastodon.localtimelinewatcher.R.layout.fragment_home
 import kotlinx.android.synthetic.main.fragment_home.*
 import okhttp3.OkHttpClient
 import kotlin.concurrent.thread
+
+class TootViewHolder(view : View): RecyclerView.ViewHolder(view) {
+    val account = view.findViewById<TextView>(R.id.account)
+    val content = view.findViewById<TextView>(R.id.content)
+}
+
+class TootsAdapter(private val toots: List<Status>, context: Context): RecyclerView.Adapter<TootViewHolder>() {
+    private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TootViewHolder {
+        val view = inflater.inflate(R.layout.toot_view, parent, false)
+        return TootViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: TootViewHolder?, position: Int) {
+        holder?.account?.text = toots[position].account?.displayName
+        holder?.content?.text = toots[position].content
+    }
+
+    override fun getItemCount(): Int {
+        return toots.size
+    }
+}
+
 
 class HomeFragment : Fragment() {
     val accessToken: AccessToken? by lazy {
@@ -44,17 +74,13 @@ class HomeFragment : Fragment() {
             return
         }
 
+        home_timeline.layoutManager = LinearLayoutManager(context)
+
         thread {
             val statuses = Timelines(client).getHome().execute().part
-
-            var s = ""
-            for (status in statuses) {
-                s += "${status.account?.displayName} ${status.content}"
-                s += "\n"
-            }
-
+            val adapter = TootsAdapter(statuses, this.context)
             activity.runOnUiThread {
-                home_placeholder.text = s
+                home_timeline.adapter = adapter
             }
         }
     }
