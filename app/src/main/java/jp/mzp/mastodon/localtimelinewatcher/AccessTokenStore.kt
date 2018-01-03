@@ -1,0 +1,27 @@
+package jp.mzp.mastodon.localtimelinewatcher
+
+import android.content.Context
+import com.google.gson.Gson
+import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken
+
+class AccessTokenStore(context: Context) {
+    private val data = context.getSharedPreferences("credential", Context.MODE_PRIVATE)
+    private val gson = Gson()
+
+    fun read(): AccessToken? {
+        val json = data.getString("access-token", "")
+
+        if (json == "") {
+            return null
+        } else {
+            return gson.fromJson<AccessToken>(json, AccessToken::class.java)
+        }
+    }
+
+    fun write(accessToken: AccessToken) {
+        val json = gson.toJson(accessToken)
+        val edit = data.edit()
+        edit.putString("access-token", json)
+        edit.apply()
+    }
+}

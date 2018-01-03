@@ -9,15 +9,16 @@
     tools:context="jp.mzp.mastodon.localtimelinewatcher.LoginActivity">
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/host_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="host name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:text="mstdn.jp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/sign_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sign in" />
