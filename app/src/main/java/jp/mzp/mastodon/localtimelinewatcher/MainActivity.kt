@@ -8,8 +8,10 @@ import android.view.Menu
 import android.R.menu
 import android.support.v4.app.Fragment
 import android.app.FragmentTransaction
+import android.content.Intent
 import android.os.PersistableBundle
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.jvm.javaClass
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +24,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         drawer_layout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
+
+        // ADD: Login check
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
 
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -43,7 +49,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
         loadFragment(HomeFragment.newInstance())
-
     }
 
     private fun loadFragment(fragment: Fragment) {
