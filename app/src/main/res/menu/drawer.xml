@@ -23,6 +23,9 @@
                 android:id="@+id/notification"
                 android:icon="@drawable/ic_notification"
                 android:title="Notification" />
+            <item
+                android:id="@+id/sign_out"
+                android:title="Sign out" />
         </menu>
     </item>
 </menu>

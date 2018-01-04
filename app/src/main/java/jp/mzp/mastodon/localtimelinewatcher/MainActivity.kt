@@ -30,13 +30,18 @@ class MainActivity : AppCompatActivity() {
         drawer_layout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
 
+        drawer_navigation.setNavigationItemSelectedListener { menu ->
+            if(menu.itemId == R.id.sign_out) {
+                accessTokenStore?.clear()
+                startLoginActivity()
+            }
+            true
+        }
+
         val hostName = accessTokenStore?.hostName
         val accessToken = accessTokenStore?.accessToken
-        println(hostName)
-        println(accessToken)
         if (hostName == null || accessToken == null) {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            startLoginActivity()
             return
         }
 
@@ -68,5 +73,10 @@ class MainActivity : AppCompatActivity() {
                 replace(R.id.frame,fragment).
                 commit()
 
+    }
+
+    private fun startLoginActivity() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 }

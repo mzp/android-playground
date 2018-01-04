@@ -30,4 +30,12 @@ class AccessTokenStore(context: Context) {
         edit.putString("access-token", json)
         edit.apply()
     }
+
+    fun clear() {
+        val edit = data.edit()
+        edit.remove("host-name")
+        edit.remove("access-token")
+        edit.apply()
+
+    }
 }
