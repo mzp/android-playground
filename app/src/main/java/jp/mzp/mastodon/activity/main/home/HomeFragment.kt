@@ -1,16 +1,19 @@
 package jp.mzp.mastodon.activity.main.home
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_home.*
 import jp.mzp.mastodon.activity.R
 import jp.mzp.mastodon.gateway.mastodon.HomeTimeline
 import jp.mzp.mastodon.values.Authentication
+import java.util.*
 
 
 class HomeFragment : Fragment() {
@@ -33,7 +36,19 @@ class HomeFragment : Fragment() {
             adapter = tootAdapter
         }
 
-        HomeTimeline(authentication).toots.observeOn(AndroidSchedulers.mainThread()).subscribe({
+        Observable.using({
+            progressBar.apply {
+                activity.runOnUiThread {
+                    visibility = View.VISIBLE
+                }
+            }
+        }, {
+            HomeTimeline(authentication).toots
+        }, { progressBar ->
+            activity.runOnUiThread {
+                progressBar.visibility = View.GONE
+            }
+        }).observeOn(AndroidSchedulers.mainThread()).subscribe({
             tootAdapter.addAll(it)
         })
     }
