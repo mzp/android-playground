@@ -1,4 +1,4 @@
-package jp.mzp.mastodon.localtimelinewatcher
+package jp.mzp.mastodon.activity
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

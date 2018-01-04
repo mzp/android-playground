@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="jp.mzp.mastodon.localtimelinewatcher.AccountFragment">
+    tools:context="jp.mzp.mastodon.activity.main.AccountFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

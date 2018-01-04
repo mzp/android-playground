@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="8dp"
     android:orientation="vertical"
-    tools:context="jp.mzp.mastodon.localtimelinewatcher.LoginActivity">
+    tools:context="jp.mzp.mastodon.activity.login.LoginActivity">
 
     <EditText
         android:id="@+id/host_name"

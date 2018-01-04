@@ -1,4 +1,4 @@
-package jp.mzp.mastodon.localtimelinewatcher
+package jp.mzp.mastodon.activity
 
 import org.junit.Test
 

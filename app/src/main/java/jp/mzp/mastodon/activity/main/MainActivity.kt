@@ -1,10 +1,12 @@
-package jp.mzp.mastodon.localtimelinewatcher
+package jp.mzp.mastodon.activity.main
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v4.app.Fragment
 import android.content.Intent
+import jp.mzp.mastodon.activity.login.LoginActivity
+import jp.mzp.mastodon.activity.R
 import jp.mzp.mastodon.store.AccessTokenStore
 import kotlinx.android.synthetic.main.activity_main.*
 

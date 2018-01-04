@@ -1,4 +1,4 @@
-package jp.mzp.mastodon.localtimelinewatcher
+package jp.mzp.mastodon.activity.login
 
 import android.content.Intent
 import android.net.Uri
@@ -10,6 +10,8 @@ import com.sys1yagi.mastodon4j.MastodonClient
 import com.sys1yagi.mastodon4j.api.Scope
 import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration
 import com.sys1yagi.mastodon4j.api.method.Apps
+import jp.mzp.mastodon.activity.R
+import jp.mzp.mastodon.activity.main.MainActivity
 import jp.mzp.mastodon.store.AccessTokenStore
 import jp.mzp.mastodon.values.Authentication
 import kotlinx.android.synthetic.main.activity_login.*
