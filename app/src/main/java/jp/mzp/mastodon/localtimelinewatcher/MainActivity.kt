@@ -2,17 +2,11 @@ package jp.mzp.mastodon.localtimelinewatcher
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
-import android.view.Menu
-import android.R.menu
 import android.support.v4.app.Fragment
-import android.app.FragmentTransaction
 import android.content.Intent
-import android.os.PersistableBundle
-import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken
+import jp.mzp.mastodon.store.AccessTokenStore
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.jvm.javaClass
 
 
 class MainActivity : AppCompatActivity() {
@@ -38,9 +32,8 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        val hostName = accessTokenStore?.hostName
-        val accessToken = accessTokenStore?.accessToken
-        if (hostName == null || accessToken == null) {
+        val authentication = accessTokenStore?.authentication
+        if (authentication == null) {
             startLoginActivity()
             return
         }
@@ -48,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
-                    loadFragment(HomeFragment.newInstance(hostName, accessToken))
+                    loadFragment(HomeFragment.newInstance(authentication))
                     true
                 }
                 R.id.notification -> {
@@ -64,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        loadFragment(HomeFragment.newInstance(hostName, accessToken))
+        loadFragment(HomeFragment.newInstance(authentication))
     }
 
     private fun loadFragment(fragment: Fragment) {

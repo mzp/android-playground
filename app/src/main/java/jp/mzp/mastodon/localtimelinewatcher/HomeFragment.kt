@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import okhttp3.OkHttpClient
 import kotlin.concurrent.thread
 import android.text.Spanned
-
+import jp.mzp.mastodon.values.Authentication
 
 
 class TootViewHolder(view : View): RecyclerView.ViewHolder(view) {
@@ -69,11 +69,17 @@ class TootsAdapter(private val toots: List<Status>, private val context: Context
 
 
 class HomeFragment : Fragment() {
+    private val AUTHENTICATION_FIELD = "authentication"
+
+    private val authentication: Authentication? by lazy {
+        arguments[AUTHENTICATION_FIELD] as Authentication
+    }
+
     val accessToken: AccessToken? by lazy {
-        (arguments["accessToken"] as? AccessTokenParcel)?.value
+        authentication?.accessToken()
     }
     val hostName: String? by lazy {
-        arguments["hostName"] as? String
+        authentication?.hostName()
     }
 
     val client: MastodonClient? by lazy {
@@ -111,11 +117,10 @@ class HomeFragment : Fragment() {
 
 
     companion object {
-        fun newInstance(hostName: String, accessToken: AccessToken): HomeFragment {
+        fun newInstance(authentication: Authentication): HomeFragment {
             return HomeFragment().apply {
                 val bundle = Bundle()
-                bundle.putString("hostName", hostName)
-                bundle.putParcelable("accessToken", AccessTokenParcel(accessToken))
+                bundle.putParcelable(AUTHENTICATION_FIELD, authentication)
                 arguments = bundle
             }
         }

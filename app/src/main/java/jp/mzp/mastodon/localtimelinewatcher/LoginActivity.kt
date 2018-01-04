@@ -7,12 +7,12 @@ import android.os.Bundle
 import android.widget.Toast
 import com.google.gson.Gson
 import com.sys1yagi.mastodon4j.MastodonClient
-import com.sys1yagi.mastodon4j.MastodonRequest
 import com.sys1yagi.mastodon4j.api.Scope
 import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration
 import com.sys1yagi.mastodon4j.api.method.Apps
+import jp.mzp.mastodon.store.AccessTokenStore
+import jp.mzp.mastodon.values.Authentication
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.OkHttpClient
 import kotlin.concurrent.thread
 
@@ -53,8 +53,7 @@ class LoginActivity : AppCompatActivity() {
                                 authCode,
                                 "authorization_code"
                         )?.execute()?.let { accessToken ->
-                            AccessTokenStore(this).write(host_name.text.toString(), accessToken)
-
+                            AccessTokenStore(this).authentication = Authentication.create(host_name.text.toString(), accessToken)
                             runOnUiThread {
                                 val intent = Intent(this, MainActivity::class.java)
                                 startActivity(intent)
