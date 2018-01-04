@@ -47,8 +47,7 @@ class LoginActivity : AppCompatActivity() {
                             {
                                 it.printStackTrace()
                                 Toast.makeText(this, it.toString(), Toast.LENGTH_LONG).show()
-                            }
-                    )
+                            })
         }
     }
 
@@ -59,12 +58,12 @@ class LoginActivity : AppCompatActivity() {
         val appRegistration = this.appRegistration
         val authCode = intent?.data?.getQueryParameter("code")
 
-        if ( hostName != null && apps != null && appRegistration != null && authCode != null) {
+        if (hostName != null && apps != null && appRegistration != null && authCode != null) {
             authenticate.accessToken(hostName, apps, appRegistration, authCode)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             {
-                                if( it != null) {
+                                if (it != null) {
                                     AccessTokenStore(this).authentication = Authentication.create(hostName, it)
                                     val intent = Intent(this, MainActivity::class.java)
                                     startActivity(intent)
