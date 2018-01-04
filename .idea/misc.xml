@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="EntryPointsManager">
+    <pattern value="jp.mzp.mastodon.activity.behavior.BottomNavigationBehavior.BottomNavigationWithSnackbar" method="updateSnackbar" />
+    <pattern value="jp.mzp.mastodon.activity.behavior.BottomNavigationBehavior.BottomNavigationWithSnackbar" />
+    <pattern value="jp.mzp.mastodon.activity.behavior.BottomNavigationBehavior" method="setHidden" />
+    <pattern value="jp.mzp.mastodon.activity.behavior.BottomNavigationBehavior" method="setScrollingEnabled" />
+    <pattern value="jp.mzp.mastodon.activity.behavior.BottomNavigationBehavior" method="isScrollingEnabled" />
+    <pattern value="jp.mzp.mastodon.activity.behavior.BottomNavigationBehavior" method="from" />
+    <pattern value="jp.mzp.mastodon.activity.behavior.BottomNavigationBehavior" />
+    <pattern value="jp.mzp.mastodon.activity.behavior.VerticalScrollingBehavior" method="onNestedDirectionFling" />
+    <pattern value="jp.mzp.mastodon.activity.behavior.VerticalScrollingBehavior" method="onDirectionNestedPreScroll" />
+    <pattern value="jp.mzp.mastodon.activity.behavior.VerticalScrollingBehavior" method="onNestedVerticalOverScroll" />
+    <pattern value="jp.mzp.mastodon.activity.behavior.VerticalScrollingBehavior" method="getScrollDirection" />
+    <pattern value="jp.mzp.mastodon.activity.behavior.VerticalScrollingBehavior" method="getOverScrollDirection" />
+    <pattern value="jp.mzp.mastodon.activity.behavior.VerticalScrollingBehavior" />
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
     <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />
