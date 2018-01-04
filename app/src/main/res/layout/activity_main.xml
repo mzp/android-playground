@@ -43,7 +43,7 @@
             android:layout_gravity="bottom"
             android:background="@color/colorPrimaryDark"
             app:elevation="8dp"
-            app:layout_behavior="jp.mzp.mastodon.behavior.BottomNavigationBehavior"
+            app:layout_behavior="jp.mzp.mastodon.activity.behavior.BottomNavigationBehavior"
             app:menu="@menu/bottom" />
 
     </android.support.design.widget.CoordinatorLayout>
