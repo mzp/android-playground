@@ -16,6 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import jp.mzp.mastodon.activity.R
 import jp.mzp.mastodon.activity.main.MainActivity
+import jp.mzp.mastodon.gateway.mastodon.Authenticate
 import jp.mzp.mastodon.store.AccessTokenStore
 import jp.mzp.mastodon.values.Authentication
 import kotlinx.android.synthetic.main.activity_login.*
@@ -23,10 +24,10 @@ import okhttp3.OkHttpClient
 import kotlin.concurrent.thread
 
 class LoginActivity : AppCompatActivity() {
-    private val REDIRECT_URL = "mzp://mstdn-login"
     private var apps: Apps? = null
     private var appRegistration: AppRegistration? = null
     private var hostName: String? = null
+    private val authenticate = Authenticate("mzp://mstdn-login")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
 
         sign_in.setOnClickListener {
             val hostName = host_name.text.toString()
-            oauthUrl(hostName)
+            authenticate.oauthUrl(hostName)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             {
@@ -59,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
         val authCode = intent?.data?.getQueryParameter("code")
 
         if ( hostName != null && apps != null && appRegistration != null && authCode != null) {
-            accessToken(hostName, apps, appRegistration, authCode)
+            authenticate.accessToken(hostName, apps, appRegistration, authCode)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             {
@@ -79,36 +80,5 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun oauthUrl(hostName: String): Observable<Triple<Apps, AppRegistration, Uri>> {
-        return Observable.just(hostName)
-                .subscribeOn(Schedulers.io())
-                .map {
-                    val client: MastodonClient = MastodonClient.Builder(it, OkHttpClient.Builder(), Gson()).build()
-                    val apps = Apps(client)
-                    val appRegistration = apps.createApp(
-                            clientName = "mastodon client dev",
-                            redirectUris = REDIRECT_URL,
-                            scope = Scope(Scope.Name.ALL),
-                            website = "https://mzp.jp"
-                    ).execute()
 
-                    val url = apps.getOAuthUrl(appRegistration.clientId, Scope(Scope.Name.ALL), REDIRECT_URL)
-                    return@map Triple(apps, appRegistration, Uri.parse(url))
-                }
-    }
-
-    private fun accessToken(hostName: String, apps: Apps, appRegistration: AppRegistration, authCode: String): Observable<AccessToken?> {
-        return Observable.just(Unit)
-                .subscribeOn(Schedulers.io())
-                .map {
-                    val accessToken = apps?.getAccessToken(
-                            appRegistration.clientId,
-                            appRegistration.clientSecret,
-                            REDIRECT_URL,
-                            authCode,
-                            "authorization_code"
-                    )
-                    accessToken.execute()
-                }
-    }
 }
