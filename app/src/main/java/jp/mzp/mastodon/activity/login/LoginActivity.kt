@@ -1,27 +1,18 @@
 package jp.mzp.mastodon.activity.login
 
 import android.content.Intent
-import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.google.gson.Gson
-import com.sys1yagi.mastodon4j.MastodonClient
-import com.sys1yagi.mastodon4j.api.Scope
-import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken
 import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration
 import com.sys1yagi.mastodon4j.api.method.Apps
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import jp.mzp.mastodon.activity.R
 import jp.mzp.mastodon.activity.main.MainActivity
 import jp.mzp.mastodon.gateway.mastodon.Authenticate
 import jp.mzp.mastodon.store.AccessTokenStore
 import jp.mzp.mastodon.values.Authentication
 import kotlinx.android.synthetic.main.activity_login.*
-import okhttp3.OkHttpClient
-import kotlin.concurrent.thread
 
 class LoginActivity : AppCompatActivity() {
     private var apps: Apps? = null

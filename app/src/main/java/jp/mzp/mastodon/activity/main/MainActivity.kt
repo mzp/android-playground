@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-    val drawerToggle: ActionBarDrawerToggle by lazy {
+    private val drawerToggle: ActionBarDrawerToggle by lazy {
         ActionBarDrawerToggle(this, drawer_layout, toolbar, R.string.drawer_open, R.string.drawer_close)
     }
 

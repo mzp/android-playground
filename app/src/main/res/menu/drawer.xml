@@ -5,27 +5,27 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="@string/menu_home" />
+    <item
+        android:id="@+id/notification"
+        android:icon="@drawable/ic_notification"
+        android:title="@string/menu_notification" />
     <item
         android:id="@+id/local_timeline"
-        android:title="Local" />
+        android:title="@string/menu_local" />
     <item
         android:id="@+id/federated_timeline"
-        android:title="Federated" />
-    <item android:title="Setting">
+        android:title="@string/menu_federated" />
+    <item android:title="@string/menu_setting">
         <menu>
 
             <item
                 android:id="@+id/account"
                 android:icon="@drawable/ic_me"
-                android:title="Account" />
-            <item
-                android:id="@+id/notification"
-                android:icon="@drawable/ic_notification"
-                android:title="Notification" />
+                android:title="@string/menu_about_me" />
             <item
                 android:id="@+id/sign_out"
-                android:title="Sign out" />
+                android:title="@string/menu_sign_out" />
         </menu>
     </item>
 </menu>

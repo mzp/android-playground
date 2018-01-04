@@ -3,6 +3,24 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mastodon_hostname">Host name</string>
+    <string name="mastodon_hostname_default">mstdn.jp</string>
+    <string name="mastodon_signin">Sign in</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_local">Local</string>
+    <string name="menu_federated">Federated</string>
+    <string name="menu_setting">Setting</string>
+    <string name="menu_notification">Notification</string>
+    <string name="menu_about_me">Me</string>
+    <string name="menu_sign_out">Sign out</string>
+
+    <string name="misc_placeholder">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sollicitudin nibh dui,
+        et ullamcorper quam fermentum in.
+    </string>
+
+    <string name="description_background">Background image</string>
+    <string name="description_avator">Avator image</string>
+
 </resources>

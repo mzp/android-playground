@@ -11,10 +11,7 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 
-/**
- * Created by mzp on 2018/01/04.
- */
-class Authenticate(val redirectUrl: String) {
+class Authenticate(private val redirectUrl: String) {
     fun oauthUrl(hostName: String): Single<Triple<Apps, AppRegistration, Uri>> {
         return Single.fromCallable {
             val client: MastodonClient = MastodonClient.Builder(hostName, OkHttpClient.Builder(), Gson()).build()
@@ -33,7 +30,7 @@ class Authenticate(val redirectUrl: String) {
 
     fun accessToken(hostName: String, apps: Apps, appRegistration: AppRegistration, authCode: String): Single<AccessToken?> {
         return Single.fromCallable {
-            val accessToken = apps?.getAccessToken(
+            val accessToken = apps.getAccessToken(
                     appRegistration.clientId,
                     appRegistration.clientSecret,
                     redirectUrl,

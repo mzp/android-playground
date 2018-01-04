@@ -7,7 +7,7 @@ import android.widget.TextView
 import jp.mzp.mastodon.activity.R
 
 class TootViewHolder(view : View): RecyclerView.ViewHolder(view) {
-    val avator = view.findViewById<ImageView>(R.id.avator)
-    val account = view.findViewById<TextView>(R.id.account)
-    val content = view.findViewById<TextView>(R.id.content)
+    val avator = view.findViewById<ImageView>(R.id.avator)!!
+    val account = view.findViewById<TextView>(R.id.account)!!
+    val content = view.findViewById<TextView>(R.id.content)!!
 }

@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken
 
 @AutoParcelGson
-abstract class Authentication() : Parcelable {
+abstract class Authentication : Parcelable {
 
     @SerializedName("hostName")
     abstract fun hostName(): String

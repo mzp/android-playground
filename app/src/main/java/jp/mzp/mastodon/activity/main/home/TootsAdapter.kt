@@ -40,13 +40,11 @@ class TootsAdapter(private val context: Context): RecyclerView.Adapter<TootViewH
         return toots.size
     }
 
-    fun fromHtml(html: String): Spanned {
-        val result: Spanned
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            result = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
+    private fun fromHtml(html: String): Spanned {
+        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
         } else {
-            result = Html.fromHtml(html)
+            Html.fromHtml(html)
         }
-        return result
     }
 }

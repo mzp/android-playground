@@ -1,6 +1,5 @@
 package jp.mzp.mastodon.activity.main.home
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -13,14 +12,13 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import jp.mzp.mastodon.activity.R
 import jp.mzp.mastodon.gateway.mastodon.HomeTimeline
 import jp.mzp.mastodon.values.Authentication
-import java.util.*
 
 
 class HomeFragment : Fragment() {
-    private val AUTHENTICATION_FIELD = "authentication"
+    private val authenticateField = "authentication"
 
     private val authentication: Authentication by lazy {
-        arguments[AUTHENTICATION_FIELD] as Authentication
+        arguments[authenticateField] as Authentication
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -57,7 +55,7 @@ class HomeFragment : Fragment() {
         fun newInstance(authentication: Authentication): HomeFragment {
             return HomeFragment().apply {
                 val bundle = Bundle()
-                bundle.putParcelable(AUTHENTICATION_FIELD, authentication)
+                bundle.putParcelable(authenticateField, authentication)
                 arguments = bundle
             }
         }
