@@ -1,4 +1,4 @@
-package jp.mzp.mastodon.behavior;
+package jp.mzp.mastodon.activity.behavior;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.annotation.IntDef;
