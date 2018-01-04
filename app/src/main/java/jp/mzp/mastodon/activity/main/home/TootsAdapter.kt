@@ -1,4 +1,4 @@
-package jp.mzp.mastodon.activity.main
+package jp.mzp.mastodon.activity.main.home
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -11,8 +11,14 @@ import com.squareup.picasso.Picasso
 import com.sys1yagi.mastodon4j.api.entity.Status
 import jp.mzp.mastodon.activity.R
 
-class TootsAdapter(private val toots: List<Status>, private val context: Context): RecyclerView.Adapter<TootViewHolder>() {
+class TootsAdapter(private val context: Context): RecyclerView.Adapter<TootViewHolder>() {
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    private val toots: ArrayList<Status> = ArrayList()
+
+    fun addAll(newToots: List<Status>) {
+        this.toots.addAll(newToots)
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TootViewHolder {
         val view = inflater.inflate(R.layout.toot_view, parent, false)

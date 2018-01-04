@@ -1,4 +1,4 @@
-package jp.mzp.mastodon.activity.main
+package jp.mzp.mastodon.activity.main.home
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

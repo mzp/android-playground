@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.content.Intent
 import jp.mzp.mastodon.activity.login.LoginActivity
 import jp.mzp.mastodon.activity.R
+import jp.mzp.mastodon.activity.main.home.HomeFragment
 import jp.mzp.mastodon.store.AccessTokenStore
 import kotlinx.android.synthetic.main.activity_main.*
 
