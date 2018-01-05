@@ -22,10 +22,10 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/holo_blue_dark"
+                android:background="@color/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:title="mstdn.jp"
-                app:titleTextColor="@android:color/white" />
+                app:title="@string/app_name"
+                app:titleTextColor="@color/colorPrimaryText" />
         </android.support.design.widget.AppBarLayout>
 
 
@@ -53,6 +53,6 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#fff"
+        android:background="@color/colorDrawerBackground"
         app:menu="@menu/drawer" />
 </android.support.v4.widget.DrawerLayout>
