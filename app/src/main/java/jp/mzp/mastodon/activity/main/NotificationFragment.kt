@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import jp.mzp.mastodon.activity.R
 
 class NotificationFragment:Fragment() {
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_notification, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_notification, container, false)
     }
 
     companion object {

@@ -31,8 +31,6 @@ public final class BottomNavigationBehavior<V extends View> extends VerticalScro
     private int mSnackbarHeight = -1;
     private boolean scrollingEnabled = true;
     private boolean hideAlongSnackbar = false;
-    int[] attrsArray = new int[]{
-            android.R.attr.id, android.R.attr.elevation};
     private int mElevation = 8;
 
     public BottomNavigationBehavior() {
@@ -41,11 +39,23 @@ public final class BottomNavigationBehavior<V extends View> extends VerticalScro
 
     public BottomNavigationBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray a = context.obtainStyledAttributes(attrs,
-                attrsArray);
-        mTabLayoutId = a.getResourceId(0, View.NO_ID);
-        mElevation = a.getResourceId(1, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mElevation, context.getResources().getDisplayMetrics()));
-        a.recycle();
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            int[] attrsArray = new int[]{
+                    android.R.attr.id, android.R.attr.elevation};
+            TypedArray a = context.obtainStyledAttributes(attrs,
+                    attrsArray);
+            mTabLayoutId = a.getResourceId(0, View.NO_ID);
+            mElevation = a.getResourceId(1, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mElevation, context.getResources().getDisplayMetrics()));
+            a.recycle();
+        } else {
+            int[] attrsArray = new int[]{
+                    android.R.attr.id};
+            TypedArray a = context.obtainStyledAttributes(attrs,
+                    attrsArray);
+            mTabLayoutId = a.getResourceId(0, View.NO_ID);
+            a.recycle();
+        }
     }
 
     public static <V extends View> BottomNavigationBehavior<V> from(@NonNull V view) {
@@ -196,10 +206,6 @@ public final class BottomNavigationBehavior<V extends View> extends VerticalScro
                 ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) dependency.getLayoutParams();
                 layoutParams.bottomMargin = targetPadding - shadow;
                 child.bringToFront();
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                    child.getParent().requestLayout();
-                    ((View) child.getParent()).invalidate();
-                }
 
             }
         }

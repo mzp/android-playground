@@ -18,17 +18,17 @@ class HomeFragment : Fragment() {
     private val authenticateField = "authentication"
 
     private val authentication: Authentication by lazy {
-        arguments[authenticateField] as Authentication
+        arguments!![authenticateField] as Authentication
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_home, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tootAdapter = TootsAdapter(context)
+        val tootAdapter = context?.let { TootsAdapter(it) }
         home_timeline.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = tootAdapter
@@ -36,18 +36,18 @@ class HomeFragment : Fragment() {
 
         Observable.using({
             progressBar.apply {
-                activity.runOnUiThread {
+                activity?.runOnUiThread {
                     visibility = View.VISIBLE
                 }
             }
         }, {
             HomeTimeline(authentication).toots
         }, { progressBar ->
-            activity.runOnUiThread {
+            activity?.runOnUiThread {
                 progressBar.visibility = View.GONE
             }
         }).observeOn(AndroidSchedulers.mainThread()).subscribe({
-            tootAdapter.addAll(it)
+            tootAdapter?.addAll(it)
         })
     }
 
