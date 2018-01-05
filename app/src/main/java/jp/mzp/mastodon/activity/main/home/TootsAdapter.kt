@@ -15,8 +15,8 @@ class TootsAdapter(private val context: Context): RecyclerView.Adapter<TootViewH
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private val toots: ArrayList<Status> = ArrayList()
 
-    fun addAll(newToots: List<Status>) {
-        this.toots.addAll(newToots)
+    fun add(toot: Status) {
+        toots.add(0, toot)
         notifyDataSetChanged()
     }
 

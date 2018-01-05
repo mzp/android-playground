@@ -34,20 +34,34 @@ class HomeFragment : Fragment() {
             adapter = tootAdapter
         }
 
-        Observable.using({
+        val homeTimeline = HomeTimeline(authentication)
+
+        val unified = Observable.concat(
+                withProgress({ homeTimeline.toots }),
+                homeTimeline.stream)
+
+
+
+        unified.observeOn(AndroidSchedulers.mainThread()).subscribe(
+                {
+                    tootAdapter?.add(it)
+                },
+                {
+                    it.printStackTrace()
+                })
+    }
+
+    private fun <T> withProgress(f : () -> Observable<T>) : Observable<T> {
+        return Observable.using({
             progressBar.apply {
                 activity?.runOnUiThread {
                     visibility = View.VISIBLE
                 }
             }
-        }, {
-            HomeTimeline(authentication).toots
-        }, { progressBar ->
+        }, { f() }, { progressBar ->
             activity?.runOnUiThread {
                 progressBar.visibility = View.GONE
             }
-        }).observeOn(AndroidSchedulers.mainThread()).subscribe({
-            tootAdapter?.addAll(it)
         })
     }
 
