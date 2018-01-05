@@ -3,30 +3,37 @@
     package="jp.mzp.mastodon.activity">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        android:fullBackupContent="@xml/backup_descriptor">
-        <activity android:name="jp.mzp.mastodon.activity.main.MainActivity">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="jp.mzp.mastodon.activity.login.LoginActivity"
+        <activity
+            android:name=".login.LoginActivity"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="mzp" android:host="mstdn-login" />
+
+                <data
+                    android:host="mstdn-login"
+                    android:scheme="mzp" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".draft.TootActivity"></activity>
     </application>
+
 </manifest>

@@ -22,5 +22,7 @@
 
     <string name="description_background">Background image</string>
     <string name="description_avator">Avator image</string>
+    <string name="toot">Toot</string>
+    <string name="about_toot">What is on your mind?</string>
 
 </resources>
