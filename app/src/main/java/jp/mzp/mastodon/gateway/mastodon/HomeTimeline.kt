@@ -13,15 +13,7 @@ import io.reactivex.schedulers.Schedulers.*
 import jp.mzp.mastodon.values.Authentication
 import okhttp3.OkHttpClient
 
-class HomeTimeline(authentication: Authentication) {
-    private val client: MastodonClient by lazy {
-        val hostName = authentication.hostName()
-        val accessToken = authentication.accessToken()
-        MastodonClient.Builder(hostName, OkHttpClient.Builder(), Gson())
-                .accessToken(accessToken.accessToken)
-                .build()
-    }
-
+class HomeTimeline(authentication: Authentication): AuthenticateMethod(authentication) {
     val toots: Observable<Status>
         get() {
             return Observable.create<Status> { emit ->

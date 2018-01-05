@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.content.Intent
 import jp.mzp.mastodon.activity.login.LoginActivity
 import jp.mzp.mastodon.activity.R
+import jp.mzp.mastodon.activity.draft.TootActivity
 import jp.mzp.mastodon.activity.main.home.HomeFragment
 import jp.mzp.mastodon.store.AccessTokenStore
 import kotlinx.android.synthetic.main.activity_main.*
@@ -60,7 +61,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
         loadFragment(HomeFragment.newInstance(authentication))
+
+        toot.setOnClickListener({
+            val intent = Intent(this, TootActivity::class.java)
+            startActivity(intent)
+        })
     }
 
     private fun loadFragment(fragment: Fragment) {

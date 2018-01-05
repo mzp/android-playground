@@ -33,7 +33,7 @@
                     android:scheme="mzp" />
             </intent-filter>
         </activity>
-        <activity android:name=".draft.TootActivity"></activity>
+        <activity android:name=".draft.TootActivity" android:windowSoftInputMode="adjustResize"></activity>
     </application>
 
 </manifest>
