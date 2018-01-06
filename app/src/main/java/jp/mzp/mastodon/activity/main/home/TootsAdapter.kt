@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.text.Spanned
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -28,6 +29,7 @@ class TootsAdapter(private val context: Context, private val toots: MutableList<
         val toot = toots[position]
 
         holder?.content?.setText(fromHtml(toot.value.content), TextView.BufferType.SPANNABLE)
+        holder?.content?.movementMethod = LinkMovementMethod.getInstance()
         val account = toot.value.account
         if (account != null) {
             holder?.account?.text = account.displayName
