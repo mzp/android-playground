@@ -10,26 +10,26 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import com.sys1yagi.mastodon4j.api.entity.Status
 import jp.mzp.mastodon.activity.R
+import jp.mzp.mastodon.values.Toot
 
-class TootsAdapter(private val context: Context): RecyclerView.Adapter<TootViewHolder>() {
-    private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    private val toots: ArrayList<Status> = ArrayList()
+class TootsAdapter(private val context: Context, private val toots: MutableList<Toot>): RecyclerView.Adapter<TootViewHolder>() {
+    private var inflater: LayoutInflater? = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     fun add(toot: Status) {
-        toots.add(0, toot)
+        toots.add(0, Toot(toot))
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TootViewHolder {
-        val view = inflater.inflate(R.layout.toot_view, parent, false)
-        return TootViewHolder(view)
+        val view = inflater?.inflate(R.layout.toot_view, parent, false)
+        return TootViewHolder(view!!)
     }
 
     override fun onBindViewHolder(holder: TootViewHolder?, position: Int) {
         val toot = toots[position]
 
-        holder?.content?.setText(fromHtml(toot.content), TextView.BufferType.SPANNABLE)
-        val account = toot.account
+        holder?.content?.setText(fromHtml(toot.value.content), TextView.BufferType.SPANNABLE)
+        val account = toot.value.account
         if (account != null) {
             holder?.account?.text = account.displayName
             Picasso.with(context).load(account.avatar).into(holder?.avator)

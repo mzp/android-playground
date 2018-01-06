@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v4.app.Fragment
 import android.content.Intent
+import android.widget.FrameLayout
 import jp.mzp.mastodon.activity.login.LoginActivity
 import jp.mzp.mastodon.activity.R
 import jp.mzp.mastodon.activity.draft.TootActivity
@@ -62,15 +63,25 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        loadFragment(HomeFragment.newInstance(authentication))
-
         toot.setOnClickListener({
             val intent = Intent(this, TootActivity::class.java)
             startActivity(intent)
         })
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        if(frame.childCount != 0) {
+            return
+        }
+        accessTokenStore?.authentication?.let {
+            loadFragment(HomeFragment.newInstance(it))
+        }
+    }
+
     private fun loadFragment(fragment: Fragment) {
+        println("loadFragment $fragment")
         supportFragmentManager.
                 beginTransaction().
                 replace(R.id.frame,fragment).
