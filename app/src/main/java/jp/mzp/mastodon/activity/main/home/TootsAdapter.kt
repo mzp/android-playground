@@ -17,7 +17,6 @@ class TootsAdapter(private val context: Context, private val toots: MutableList<
 
     fun add(toot: Status) {
         toots.add(0, Toot(toot))
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TootViewHolder {

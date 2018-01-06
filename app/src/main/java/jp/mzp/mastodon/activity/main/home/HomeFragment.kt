@@ -12,6 +12,7 @@ import com.tinsuke.icekick.extension.serialState
 import com.tinsuke.icekick.extension.unfreezeInstanceState
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_home.*
 import jp.mzp.mastodon.activity.R
 import jp.mzp.mastodon.gateway.mastodon.HomeTimeline
@@ -31,6 +32,7 @@ class HomeFragment : Fragment() {
     private val tootAdapter: TootsAdapter? by lazy {
         context?.let { TootsAdapter(it, this.toots) }
     }
+    private var streamDisposable: Disposable? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -55,15 +57,33 @@ class HomeFragment : Fragment() {
         }
 
         if(toots.isEmpty()) {
-            withProgress({ homeTimeline.toots }).observeOn(AndroidSchedulers.mainThread()).subscribe(
+            withProgress(homeTimeline::toots).observeOn(AndroidSchedulers.mainThread()).subscribe(
                     {
                         tootAdapter?.add(it)
                     },
+                    this::onError,
                     {
-                        it.printStackTrace()
-                        Toast.makeText(context, it.message, Toast.LENGTH_LONG)
+                        tootAdapter?.notifyDataSetChanged()
                     })
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        this.streamDisposable?.dispose()
+        this.streamDisposable = homeTimeline.stream().observeOn(AndroidSchedulers.mainThread()).subscribe(
+                {
+                    tootAdapter?.add(it)
+                    tootAdapter?.notifyDataSetChanged()
+                },
+                this::onError)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        this.streamDisposable?.dispose()
+        this.streamDisposable = null
     }
 
     private fun <T> withProgress(f : () -> Observable<T>) : Observable<T> {
@@ -78,6 +98,13 @@ class HomeFragment : Fragment() {
                 progressBar.visibility = View.GONE
             }
         })
+    }
+
+    private fun onError(error: Throwable) {
+        error.printStackTrace()
+        activity?.runOnUiThread {
+            Toast.makeText(context, error.message, Toast.LENGTH_LONG)
+        }
     }
 
     companion object {
