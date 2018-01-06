@@ -17,7 +17,7 @@ class Authenticate(private val redirectUrl: String) {
             val client: MastodonClient = MastodonClient.Builder(hostName, OkHttpClient.Builder(), Gson()).build()
             val apps = Apps(client)
             val appRegistration = apps.createApp(
-                    clientName = "mastodon client dev",
+                    clientName = "🍣.gq",
                     redirectUris = redirectUrl,
                     scope = Scope(Scope.Name.ALL),
                     website = "https://mzp.jp"
