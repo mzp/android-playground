@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import jp.mzp.mastodon.activity.R
 import jp.mzp.mastodon.gateway.mastodon.HomeTimeline
 import jp.mzp.mastodon.values.Authentication
+import java.util.concurrent.TimeUnit
 
 
 class HomeFragment : Fragment() {
@@ -39,8 +40,6 @@ class HomeFragment : Fragment() {
         val unified = Observable.concat(
                 withProgress({ homeTimeline.toots }),
                 homeTimeline.stream)
-
-
 
         unified.observeOn(AndroidSchedulers.mainThread()).subscribe(
                 {
