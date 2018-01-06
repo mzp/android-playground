@@ -14,6 +14,7 @@ import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.schedulers.Schedulers.*
 import jp.mzp.mastodon.values.Authentication
+import java.io.InterruptedIOException
 import java.util.concurrent.TimeUnit
 
 class HomeTimeline(authentication: Authentication): AuthenticateMethod(authentication) {
@@ -45,8 +46,10 @@ class HomeTimeline(authentication: Authentication): AuthenticateMethod(authentic
                 })
                 emit.setCancellable(shutdown::shutdown)
             } catch (e: Mastodon4jRequestException) {
-                println("onError")
-                emit.onError(e)
+                if(!(e.cause is InterruptedIOException)) {
+                    println("onError")
+                    emit.onError(e)
+                }
             }
         }, BackpressureStrategy.LATEST).subscribeOn(io()).retry(3)
     }
