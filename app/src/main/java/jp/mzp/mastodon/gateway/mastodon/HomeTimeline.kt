@@ -6,6 +6,9 @@ import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
 import com.sys1yagi.mastodon4j.api.method.Streaming
 import com.sys1yagi.mastodon4j.api.method.Timelines
+import com.sys1yagi.mastodon4j.rx.RxStreaming
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
@@ -24,8 +27,8 @@ class HomeTimeline(authentication: Authentication): AuthenticateMethod(authentic
             }.subscribeOn(io())
         }
 
-    fun stream() : Observable<Status> {
-        return Observable.create<Status> { emit ->
+    fun stream() : Flowable<Status> {
+        return Flowable.create<Status>({ emit ->
             try {
                 println("start streaming")
                 val streaming = Streaming(client)
@@ -40,20 +43,12 @@ class HomeTimeline(authentication: Authentication): AuthenticateMethod(authentic
                         emit.onNext(status)
                     }
                 })
-                emit.setCancellable {
-                    println("shutdown")
-                    shutdown.shutdown()
-                }
+                emit.setCancellable(shutdown::shutdown)
             } catch (e: Mastodon4jRequestException) {
                 println("onError")
                 emit.onError(e)
             }
-        }.subscribeOn(io()).retryWhen { attempts ->
-            attempts.zipWith<Int, Long>(Observable.range(1, 3), BiFunction { _, n -> fib(n.toLong()) }).flatMap { i ->
-                println("waiting $i")
-                Observable.timer(i, TimeUnit.SECONDS)
-            }
-        }
+        }, BackpressureStrategy.LATEST).subscribeOn(io()).retry(3)
     }
 
     private fun fib(n: Long): Long {
