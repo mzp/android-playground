@@ -88,14 +88,14 @@ class HomeFragment : Fragment() {
 
     private fun <T> withProgress(f : () -> Observable<T>) : Observable<T> {
         return Observable.using({
-            progressBar.apply {
+            refresh.apply {
                 activity?.runOnUiThread {
-                    visibility = View.VISIBLE
+                    isRefreshing = true
                 }
             }
-        }, { f() }, { progressBar ->
+        }, { f() }, { refresh ->
             activity?.runOnUiThread {
-                progressBar.visibility = View.GONE
+                refresh.isRefreshing = false
             }
         })
     }

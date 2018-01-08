@@ -5,31 +5,20 @@
     tools:context="jp.mzp.mastodon.activity.main.home.HomeFragment">
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/home_timeline"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/home_timeline"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-    <FrameLayout
-        android:id="@+id/progressBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
+        </FrameLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-        <ImageView
-            android:contentDescription="@string/description_background"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:src="@drawable/progress" />
-
-        <ProgressBar
-            style="@style/Widget.AppCompat.ProgressBar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:indeterminate="true" />
-
-    </FrameLayout>
 
 </FrameLayout>
