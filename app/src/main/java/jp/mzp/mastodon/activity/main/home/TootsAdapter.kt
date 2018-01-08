@@ -16,8 +16,8 @@ import jp.mzp.mastodon.values.Toot
 class TootsAdapter(private val context: Context, private val toots: MutableList<Toot>): RecyclerView.Adapter<TootViewHolder>() {
     private var inflater: LayoutInflater? = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-    fun add(toot: Status) {
-        toots.add(0, Toot(toot))
+    fun add(toot: Toot) {
+        toots.add(0, toot)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TootViewHolder {
