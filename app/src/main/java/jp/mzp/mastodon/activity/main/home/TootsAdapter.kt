@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import com.squareup.picasso.Picasso
-import com.sys1yagi.mastodon4j.api.entity.Status
 import jp.mzp.mastodon.activity.R
 import jp.mzp.mastodon.values.Toot
 

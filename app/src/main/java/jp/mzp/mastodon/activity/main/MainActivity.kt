@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v4.app.Fragment
 import android.content.Intent
-import android.widget.FrameLayout
 import jp.mzp.mastodon.activity.login.LoginActivity
 import jp.mzp.mastodon.activity.R
 import jp.mzp.mastodon.activity.draft.TootActivity
 import jp.mzp.mastodon.activity.main.home.HomeFragment
+import jp.mzp.mastodon.activity.main.notification.NotificationFragment
 import jp.mzp.mastodon.store.AccessTokenStore
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.notification -> {
-                    loadFragment(NotificationFragment.newInstance())
+                    loadFragment(NotificationFragment.newInstance(authentication))
                     true
                 }
                 R.id.me -> {

@@ -29,11 +29,8 @@ class HomeTimeline(authentication: Authentication): AuthenticateMethod(authentic
     }
 
     fun stream() : Flowable<Status> {
-        return Flowable.create<Status>({ emit ->
-            try {
-                println("start streaming")
-                val streaming = Streaming(client)
-                val shutdown = streaming.user(object : Handler {
+        return flow({ emit ->
+            object : Handler {
                     override fun onDelete(id: Long) {
                     }
 
@@ -43,24 +40,7 @@ class HomeTimeline(authentication: Authentication): AuthenticateMethod(authentic
                     override fun onStatus(status: Status) {
                         emit.onNext(status)
                     }
-                })
-                emit.setCancellable(shutdown::shutdown)
-            } catch (e: Mastodon4jRequestException) {
-                if(!(e.cause is InterruptedIOException)) {
-                    println("onError")
-                    emit.onError(e)
-                }
             }
-        }, BackpressureStrategy.LATEST).subscribeOn(io()).retry(3)
-    }
-
-    private fun fib(n: Long): Long {
-        return if(n == 0L) {
-            1L
-        } else if (n == 1L) {
-            1L
-        } else {
-            fib(n - 2L) * fib (n - 1L)
-        }
+        })
     }
 }
