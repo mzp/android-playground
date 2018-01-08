@@ -2,9 +2,10 @@ package jp.mzp.mastodon.store
 
 import android.content.Context
 import android.content.SharedPreferences
-import auto.parcelgson.gson.AutoParcelGsonTypeAdapterFactory
-import com.google.gson.GsonBuilder
+import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import jp.mzp.mastodon.values.Authentication
+import jp.mzp.mastodon.values.RawAuthentication
 
 class AccessTokenStore(context: Context) {
     private val authenticateField = "authentication"
@@ -13,19 +14,23 @@ class AccessTokenStore(context: Context) {
         context.getSharedPreferences("credential", Context.MODE_PRIVATE)
     }
 
-    private val gson = GsonBuilder().registerTypeAdapterFactory(AutoParcelGsonTypeAdapterFactory()).create()
-
     var authentication: Authentication?
         get() {
             val json = data.getString(authenticateField, "")
             return if (json == "") {
                 null
             } else {
-                gson.fromJson<Authentication>(json, Authentication::class.java)
+                try {
+                    val value = Gson().fromJson<RawAuthentication>(json, RawAuthentication::class.java)
+                    return Authentication(value)
+                } catch (exception: JsonSyntaxException) {
+                    exception.printStackTrace()
+                    return null
+                }
             }
         }
         set(value) {
-            val json = gson.toJson(value)
+            val json = Gson().toJson(value?.value)
             val edit = data.edit()
             edit.putString(authenticateField, json)
             edit.apply()

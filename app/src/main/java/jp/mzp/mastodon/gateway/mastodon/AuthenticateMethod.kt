@@ -10,8 +10,8 @@ import okhttp3.OkHttpClient
  */
 open class AuthenticateMethod(authentication: Authentication) {
     protected val client: MastodonClient by lazy {
-        val hostName = authentication.hostName()
-        val accessToken = authentication.accessToken()
+        val hostName = authentication.hostName
+        val accessToken = authentication.accessToken
         MastodonClient.Builder(hostName, OkHttpClient.Builder(), Gson())
                 .accessToken(accessToken.accessToken)
                 .build()
