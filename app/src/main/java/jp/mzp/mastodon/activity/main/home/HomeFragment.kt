@@ -3,6 +3,7 @@ package jp.mzp.mastodon.activity.main.home
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,35 +54,38 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         home_timeline.apply {
-            layoutManager = LinearLayoutManager(context)
+            val lm = LinearLayoutManager(context)
+            layoutManager = lm
             adapter = tootAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val last = lm.findLastVisibleItemPosition()
+                    if (last + 2 > toots.size) {
+                        fetch(Range(toots.last().value.id))
+                    }
+                }
+            })
         }
 
         refresh.setOnRefreshListener {
-            homeTimeline.toots(Range(null, this.toots.first().value.id)).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                    {
-                        tootAdapter?.add(it)
-                    },
-                    {
-                        this.onError(it)
-                        refresh.isRefreshing = false
-                    },
-                    {
-                        tootAdapter?.notifyDataSetChanged()
-                        refresh.isRefreshing = false
-                    })
+            fetch(Range(null, this.toots.first().value.id))
         }
 
         if(toots.isEmpty()) {
-            withProgress({ homeTimeline.toots() }).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                    {
-                        tootAdapter?.add(it)
-                    },
-                    this::onError,
-                    {
-                        tootAdapter?.notifyDataSetChanged()
-                    })
+            fetch()
         }
+    }
+
+    private fun fetch(range: Range = Range()) {
+        withProgress({ homeTimeline.toots(range) }).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                {
+                    tootAdapter?.add(it)
+                },
+                this::onError,
+                {
+                    tootAdapter?.notifyDataSetChanged()
+                })
     }
 
     override fun onResume() {
