@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.sys1yagi.mastodon4j.api.Range
 import com.tinsuke.icekick.extension.freezeInstanceState
 import com.tinsuke.icekick.extension.serialState
 import com.tinsuke.icekick.extension.unfreezeInstanceState
@@ -56,8 +57,23 @@ class HomeFragment : Fragment() {
             adapter = tootAdapter
         }
 
+        refresh.setOnRefreshListener {
+            homeTimeline.toots(Range(null, this.toots.first().value.id)).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                    {
+                        tootAdapter?.add(it)
+                    },
+                    {
+                        this.onError(it)
+                        refresh.isRefreshing = false
+                    },
+                    {
+                        tootAdapter?.notifyDataSetChanged()
+                        refresh.isRefreshing = false
+                    })
+        }
+
         if(toots.isEmpty()) {
-            withProgress(homeTimeline::toots).observeOn(AndroidSchedulers.mainThread()).subscribe(
+            withProgress({ homeTimeline.toots() }).observeOn(AndroidSchedulers.mainThread()).subscribe(
                     {
                         tootAdapter?.add(it)
                     },

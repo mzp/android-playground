@@ -1,6 +1,7 @@
 package jp.mzp.mastodon.gateway.mastodon
 
 import com.sys1yagi.mastodon4j.api.Handler
+import com.sys1yagi.mastodon4j.api.Range
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
@@ -18,15 +19,14 @@ import java.io.InterruptedIOException
 import java.util.concurrent.TimeUnit
 
 class HomeTimeline(authentication: Authentication): AuthenticateMethod(authentication) {
-    val toots: Observable<Status>
-        get() {
-            return Observable.create<Status> { emit ->
-                Timelines(client).getHome().execute().part.reversed().forEach {
-                    emit.onNext(it)
-                }
-                emit.onComplete()
-            }.subscribeOn(io())
-        }
+    fun toots(range : Range = Range()): Observable<Status> {
+        return Observable.create<Status> { emit ->
+            Timelines(client).getHome(range).execute().part.reversed().forEach {
+                emit.onNext(it)
+            }
+            emit.onComplete()
+        }.subscribeOn(io())
+    }
 
     fun stream() : Flowable<Status> {
         return Flowable.create<Status>({ emit ->
