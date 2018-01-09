@@ -65,7 +65,11 @@ abstract class TimelineFragment<T, VH: RecyclerView.ViewHolder> : Fragment()
         }
 
         swipeRefreshLayout.setOnRefreshListener {
-            fetch(Range(null, this.elements.first().id))
+            if(this.elements.isEmpty()) {
+                fetch()
+            } else {
+                fetch(Range(null, this.elements.first().id))
+            }
         }
 
         if(elements.isEmpty()) {
@@ -113,10 +117,7 @@ abstract class TimelineFragment<T, VH: RecyclerView.ViewHolder> : Fragment()
     }
 
     private fun onError(error: Throwable) {
-        error.printStackTrace()
-        activity?.runOnUiThread {
-            Toast.makeText(context, error.message, Toast.LENGTH_LONG)
-        }
+        Toast.makeText(activity, error.message, Toast.LENGTH_LONG).show()
     }
 }
 
